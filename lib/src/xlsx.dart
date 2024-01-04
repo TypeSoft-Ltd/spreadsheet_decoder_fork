@@ -211,7 +211,7 @@ class XlsxDecoder extends SpreadsheetDecoder {
   }
 
   @override
-  void updateCell(String sheet, int columnIndex, int rowIndex, dynamic value) {
+  void updateCell(String sheet, int columnIndex, int rowIndex, dynamic value, {recalculateFormula = false}) {
     super.updateCell(sheet, columnIndex, rowIndex, value);
 
     var foundRow = _findRowByIndex(_sheets[sheet]!, rowIndex);
