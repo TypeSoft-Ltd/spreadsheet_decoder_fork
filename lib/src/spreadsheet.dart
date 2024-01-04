@@ -145,14 +145,18 @@ abstract class SpreadsheetDecoder {
     _checkSheetArguments(sheet);
     var table = _tables[sheet]!;
 
+    _checkIndexes(columnIndex, table, rowIndex);
+
+    table.rows[rowIndex][columnIndex] = value.toString();
+  }
+
+  void _checkIndexes(int columnIndex, SpreadsheetTable table, int rowIndex) {
     if (columnIndex < 0 || columnIndex >= table._maxCols) {
       throw RangeError.range(columnIndex, 0, table._maxCols - 1);
     }
     if (rowIndex < 0 || rowIndex >= table._maxRows) {
       throw RangeError.range(rowIndex, 0, table._maxRows - 1);
     }
-
-    table.rows[rowIndex][columnIndex] = value.toString();
   }
 
   /// Encode bytes after update
