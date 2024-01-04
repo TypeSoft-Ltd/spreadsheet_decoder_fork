@@ -4,8 +4,7 @@ const _spreasheetOds = 'ods';
 const _spreasheetXlsx = 'xlsx';
 final Map<String, String> _spreasheetExtensionMap = <String, String>{
   _spreasheetOds: 'application/vnd.oasis.opendocument.spreadsheet',
-  _spreasheetXlsx:
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  _spreasheetXlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 };
 
 // Normalize new line
@@ -63,14 +62,12 @@ abstract class SpreadsheetDecoder {
 
   SpreadsheetDecoder();
 
-  factory SpreadsheetDecoder.decodeBytes(List<int> data,
-      {bool update = false, bool verify = false}) {
+  factory SpreadsheetDecoder.decodeBytes(List<int> data, {bool update = false, bool verify = false}) {
     var archive = ZipDecoder().decodeBytes(data, verify: verify);
     return _newSpreadsheetDecoder(archive, update);
   }
 
-  factory SpreadsheetDecoder.decodeBuffer(InputStreamBase input,
-      {bool update = false, bool verify = false}) {
+  factory SpreadsheetDecoder.decodeBuffer(InputStreamBase input, {bool update = false, bool verify = false}) {
     var archive = ZipDecoder().decodeBuffer(input, verify: verify);
     return _newSpreadsheetDecoder(archive, update);
   }
@@ -190,8 +187,7 @@ abstract class SpreadsheetDecoder {
         } else {
           var content = file.content as Uint8List;
           var compress = file.compress;
-          copy = ArchiveFile(file.name, content.length, content)
-            ..compress = compress;
+          copy = ArchiveFile(file.name, content.length, content)..compress = compress;
         }
         clone.addFile(copy);
       }
