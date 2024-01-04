@@ -141,11 +141,15 @@ abstract class SpreadsheetDecoder {
   }
 
   /// Update the contents from [sheet] of the cell [columnIndex]x[rowIndex] with indexes start from 0
-  void updateCell(String sheet, int columnIndex, int rowIndex, dynamic value) {
+  void updateCell(String sheet, int columnIndex, int rowIndex, dynamic value, {recalculateFormula = false}) {
     _checkSheetArguments(sheet);
     var table = _tables[sheet]!;
 
     _checkIndexes(columnIndex, table, rowIndex);
+
+    if (recalculateFormula) {
+      recalculateFormula(sheet, columnIndex, rowIndex);
+    }
 
     table.rows[rowIndex][columnIndex] = value.toString();
   }
@@ -157,6 +161,24 @@ abstract class SpreadsheetDecoder {
     if (rowIndex < 0 || rowIndex >= table._maxRows) {
       throw RangeError.range(rowIndex, 0, table._maxRows - 1);
     }
+  }
+
+  /// Recalculates cell from [sheet] of the cell [columnIndex]x[rowIndex] with indexes start from 0
+  /// ! Does not update the depending formulas on updated cell
+  void recalculateFormula(String sheet, int columnIndex, int rowIndex) {
+    _checkSheetArguments(sheet);
+    var table = _tables[sheet]!;
+
+    _checkIndexes(columnIndex, table, rowIndex);
+
+    // _archiveFiles['calcChain']
+    for (var xmlFile in _xmlFiles.keys) {
+      print('xml filename: $xmlFile');
+    }
+
+    // _addCellToCalcChain();
+
+    print('recalculating');
   }
 
   /// Encode bytes after update
